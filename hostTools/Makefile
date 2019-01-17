@@ -156,7 +156,7 @@ mkjffs2:
 
 export LIBUUID_DIR = $(TOPDIR)/util-linux-2.21
 export ZLIB_DIR = $(TOPDIR)/zlib-1.2.5
-export LZO_DIR = $(TOPDIR)/lzo-2.06
+export LZO_DIR = $(TOPDIR)/lzo-2.10
 
 $(LIBUUID_DIR)/.configured:
 	(tar -jkxf util-linux-2.21.tar.bz2 2> /dev/null || true)
@@ -179,13 +179,13 @@ zlib: $(ZLIB_DIR)/.configured
 	make -C zlib-1.2.5 install
 
 $(LZO_DIR)/.configured:
-	(tar -jkxf lzo-2.06.tar.bz2 2> /dev/null || true)
+	(tar -zxvf lzo-2.10.tar.gz 2> /dev/null || true)
 	cd $(LZO_DIR); ./configure --prefix=$(TOPDIR)
 	touch $@
 
 lzo: $(LZO_DIR)/.configured
 	@echo build lzo ...
-	make -C lzo-2.06 install
+	make -C lzo-2.10 install
 
 mkfs.ubifs: libuuid zlib lzo
 	@echo building mkfs.ubifs host tool ...
